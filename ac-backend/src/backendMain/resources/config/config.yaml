@@ -1,0 +1,24 @@
+# Site config
+
+site:
+  domain: 'http://localhost'
+  port: 9010
+  name: 'Anarchy Chess'
+
+database:
+  # Valid values: 'sqlite', 'h2' or `postgres'
+  driver: sqlite
+  database: 'anarchychess'  # for sqlite this is the filename
+
+  # Postgres-only
+  host: 'localhost'
+  port: 5432
+  username: 'chess'
+  password: 'chess'
+
+oauth:
+  client_id: 'google-client-id'
+  client_secret: 'google-client-secret'
+  scopes:
+    - 'https://www.googleapis.com/auth/userinfo.email'
+    - 'https://www.googleapis.com/auth/userinfo.profile'

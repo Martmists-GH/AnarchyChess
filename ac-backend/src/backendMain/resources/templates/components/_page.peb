@@ -1,0 +1,44 @@
+{# @pebvariable name="request" type="dev.anarchy.backend.site.templating.RequestMetadata" #}
+{# @pebvariable name="site" type="dev.anarchy.backend.config.RootConfig" #}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {# Title #}
+        <title>{% block title %}{{ config.site.name }}{% endblock %}</title>
+
+        {# Meta tags #}
+        <meta charset="UTF-8" />
+        <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="viewport" content="width=device-width" />
+
+        {# Navbar colors #}
+        <meta name="theme-color" content="#000000" />
+        <meta name="msapplication-navbutton-color" content="#000000" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#000000" />
+
+        {# OG tags #}
+        <meta content="{{ request.url }}" property="og:url" />
+        <meta content="{% block og_type %}website{% endblock %}" property="og:type" />
+        <meta content="{% block og_title %}{{ config.site.name }}{% endblock %}" property="og:title" />
+        <meta content="{% block og_description %}Chess with better rules{% endblock %}" property="og:description" />
+        <meta content="{% block og_image %}{{ request.baseUrl }}/static/img/og/banner.png{% endblock %}" property="og:image" />
+
+        {# Favicon #}
+        <link href="/static/img/favicon.ico" rel="icon">
+
+        {# Styles #}
+        {% block styles %}{% endblock %}
+        <link href="/static/css/style.css" rel="stylesheet">
+
+        {# Scripts #}
+        {% block scripts %}{% endblock %}
+        <script type="text/javascript" src="/static/js/index.js"></script>
+
+        {% block head %}{% endblock %}
+    </head>
+    <body {% block body_attrs %}{% endblock %}>
+        {% block body %}{% endblock %}
+    </body>
+</html>
