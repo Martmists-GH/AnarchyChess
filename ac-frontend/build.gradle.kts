@@ -20,6 +20,7 @@ kotlin {
                 implementation(project(":ac-common"))
 
                 implementation(compose.web.core)
+                implementation(compose.web.svg)
                 implementation(compose.runtime)
 
                 // KTor - Client
