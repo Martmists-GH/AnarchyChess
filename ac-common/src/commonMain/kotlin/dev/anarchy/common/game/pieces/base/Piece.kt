@@ -1,4 +1,4 @@
-package dev.anarchy.common.game.pieces
+package dev.anarchy.common.game.pieces.base
 
 import dev.anarchy.common.game.Board
 import dev.anarchy.common.game.moves.Move
@@ -17,6 +17,10 @@ interface Piece {
 
     // If this piece has priority behavior, e.g. forced moves
     fun hasPriority(): Boolean
+
+    fun isEmpty(): Boolean {
+        return player == -1
+    }
 
     // Piece representing an empty square
     companion object EMPTY : Piece {
