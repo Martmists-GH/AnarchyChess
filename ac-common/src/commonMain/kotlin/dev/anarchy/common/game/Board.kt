@@ -13,6 +13,9 @@ class Board(private val rows: Int, private val columns: Int, private val numPlay
 
     fun getPiece(position: Position): Piece {
         val (row, column) = position
+        if (row < 0 || row >= rows || column < 0 || column >= columns) {
+            return Piece.INVALID
+        }
         return board[row*columns + column]
     }
 
