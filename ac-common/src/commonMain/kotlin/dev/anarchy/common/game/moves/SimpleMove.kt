@@ -4,15 +4,7 @@ import dev.anarchy.common.game.Board
 import dev.anarchy.common.game.Position
 import dev.anarchy.common.game.pieces.base.Piece
 
-class SimpleMove(val from: Position, val to: Position) : Move {
-    override fun sourcePosition(): Position {
-        return from
-    }
-
-    override fun targetPosition(): Position {
-        return to
-    }
-
+class SimpleMove(override val from: Position, override val to: Position, override val isForced: Boolean) : Move {
     override fun execute(board: Board) {
         val piece = board.getPiece(from)
         board.setPiece(to, piece)

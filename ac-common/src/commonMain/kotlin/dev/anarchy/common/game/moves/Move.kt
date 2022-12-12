@@ -4,12 +4,8 @@ import dev.anarchy.common.game.Board
 import dev.anarchy.common.game.Position
 
 interface Move {
-    // Source
-    fun sourcePosition(): Position
-
-    // Square to highlight
-    fun targetPosition(): Position
-
-    // TODO: How to handle promotion?
+    val from: Position
+    val to: Position
+    val isForced: Boolean
     fun execute(board: Board)
 }
