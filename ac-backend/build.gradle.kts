@@ -113,8 +113,7 @@ tasks {
         outputs.upToDateWhen { false }  // Bug in Webpack Task
 
         val frontendTask = getByName("frontendBrowser${if (isDevelopment) "Development" else "Production"}Webpack")
-        val appTask = project(":ac-frontend").tasks.getByName("appBrowser${if (isDevelopment) "Development" else "Production"}Webpack")
-        val appCompileSass = project(":ac-frontend").tasks.getByName("compileSass")
+        val appTask = project(":ac-frontend").tasks.getByName("webBrowser${if (isDevelopment) "Development" else "Production"}Webpack")
 
         into("/static/js") {
             from(frontendTask) {
@@ -132,7 +131,6 @@ tasks {
         }
         into("/static/css") {
             from(compileSass)
-            from(appCompileSass)
         }
     }
 

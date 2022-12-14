@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "dev.anarchy"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 val localProperties = File("local.properties")
 if (!localProperties.exists()) {
@@ -40,6 +40,7 @@ subprojects {
     repositories {
         martmists()
         mavenCentral()
+        google()
     }
 
     buildConfig {
@@ -54,7 +55,7 @@ subprojects {
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = JavaVersion.VERSION_11.toString()
                 if (!isDevelopment) {
                     freeCompilerArgs += listOf(
                         "-Xno-call-assertions",
