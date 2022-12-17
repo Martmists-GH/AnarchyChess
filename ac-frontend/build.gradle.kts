@@ -33,11 +33,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":ac-common"))
+
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.runtime)
+
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
                 implementation("io.ktor:ktor-client-core:2.2.1")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.1")
                 implementation("io.ktor:ktor-client-content-negotiation:2.2.1")
@@ -65,7 +69,7 @@ kotlin {
             dependsOn(jvmMain)
 
             dependencies {
-                implementation(compose.desktop.common)
+                implementation(compose.desktop.currentOs)
                 implementation("ch.qos.logback:logback-classic:1.4.5")
             }
         }
@@ -87,6 +91,14 @@ compose.desktop {
         mainClass = "dev.anarchy.app.MainKt"
 
         nativeDistributions {
+            packageName = "AnarchyChess"
+            description = "Chess but 2"
+            copyright = "© 2022 Anarchy Chess Developers. All rights reserved."
+            licenseFile.set(rootDir.resolve("LICENSE"))
+
+            outputBaseDir.set(rootProject.buildDir.resolve("dist"))
+            modules("java.instrument", "jdk.unsupported")
+
             targetFormats(
                 // MacOS
                 TargetFormat.Dmg,
@@ -94,11 +106,30 @@ compose.desktop {
                 TargetFormat.Msi,
                 // Linux
                 TargetFormat.Deb,
-                TargetFormat.Rpm,
-                TargetFormat.AppImage,
             )
+
+            windows {
+                perUserInstall = true
+                dirChooser = true
+            }
+            linux {
+
+            }
+            macOS {
+                bundleID = group as String
+            }
         }
+
+        buildTypes.release.proguard {
+            configurationFiles.from(projectDir.resolve("proguard-desktop-rules.pro"))
+        }
+
+
     }
+}
+
+compose.experimental {
+    web.application { }
 }
 
 android {
@@ -114,6 +145,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    buildTypes {
+        debug {
+            proguardFiles(getDefaultProguardFile("proguard-defaults.txt"), projectDir.resolve("proguard-android-rules.pro"))
+        }
+        release {
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), projectDir.resolve("proguard-android-rules.pro"))
+        }
+    }
+
     sourceSets {
         named("main") {
             manifest.srcFile("src/appMain/AndroidManifest.xml")
@@ -123,6 +163,10 @@ android {
 }
 
 tasks {
+    named("preBuild") {
+        dependsOn("clean")
+    }
+
     named("build") {
         if (isDevelopment) {
             dependsOn(

@@ -7,7 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.pebble.*
 import io.ktor.server.plugins.autohead.*
 import io.ktor.server.plugins.statuspages.*
-import dev.anarchy.ac_backend.BackendBuildConfig
+import dev.anarchy.backend.BackendBuildConfig
 import dev.anarchy.backend.ext.respondTemplate
 
 fun Application.setupContent() {

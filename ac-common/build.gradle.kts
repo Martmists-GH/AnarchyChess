@@ -36,3 +36,9 @@ android {
         }
     }
 }
+
+tasks {
+    named("preBuild") {
+        dependsOn("clean")
+    }
+}

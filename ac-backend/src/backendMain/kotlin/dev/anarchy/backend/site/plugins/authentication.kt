@@ -1,6 +1,6 @@
 package dev.anarchy.backend.site.plugins
 
-import dev.anarchy.ac_backend.BackendBuildConfig
+import dev.anarchy.backend.BackendBuildConfig
 import dev.anarchy.backend.config.ConfigLoader
 import dev.anarchy.backend.database.DatabaseHandler
 import dev.anarchy.backend.database.tables.MetadataTable

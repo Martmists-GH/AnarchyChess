@@ -46,7 +46,7 @@ subprojects {
     buildConfig {
         generator(BuildConfigKotlinGenerator())
         className("${project.name.removePrefix("${rootProject.name}-").capitalized()}BuildConfig")
-        packageName("$group.${project.name.replace('-', '_')}")
+        packageName("$group.${project.name.removePrefix("${rootProject.name}-").replace('-', '_')}")
         buildConfigField("String", "VERSION", "\"$version\"")
         buildConfigField("String", "GROUP", "\"$group\"")
         buildConfigField("Boolean", "DEVELOPMENT", "$isDevelopment")

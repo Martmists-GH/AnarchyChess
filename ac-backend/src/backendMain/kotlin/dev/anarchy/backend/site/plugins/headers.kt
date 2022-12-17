@@ -1,6 +1,6 @@
 package dev.anarchy.backend.site.plugins
 
-import dev.anarchy.ac_backend.BackendBuildConfig
+import dev.anarchy.backend.BackendBuildConfig
 import io.ktor.server.application.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.defaultheaders.*
