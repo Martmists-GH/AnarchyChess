@@ -15,7 +15,9 @@ plugins {
 }
 
 group = "dev.anarchy"
-version = "1.0.0"
+
+val build_version by defaultProperty("1.0.0")
+version = build_version
 
 val localProperties = File("local.properties")
 if (!localProperties.exists()) {
@@ -25,8 +27,7 @@ Properties().also { it.load(localProperties.reader()) }.forEach { (k, v) ->
     project.extra.set(k.toString(), v)
 }
 
-val development: String? by project
-val isDevelopment = development != "false"
+val development by transformedProperty { it != "false" }
 
 subprojects {
     apply(plugin="org.jetbrains.kotlin.multiplatform")
@@ -49,14 +50,17 @@ subprojects {
         packageName("$group.${project.name.removePrefix("${rootProject.name}-").replace('-', '_')}")
         buildConfigField("String", "VERSION", "\"$version\"")
         buildConfigField("String", "GROUP", "\"$group\"")
-        buildConfigField("Boolean", "DEVELOPMENT", "$isDevelopment")
+        buildConfigField("Boolean", "DEVELOPMENT", "$development")
+        buildConfigField("String", "COMMIT_COUNT", "\"${getCommitCount()}\"")
+        buildConfigField("String", "COMMIT_SHA", "\"${getGitSha()}\"")
+        buildConfigField("String", "BUILD_TIME", "\"${getBuildTime()}\"")
     }
 
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
                 jvmTarget = JavaVersion.VERSION_11.toString()
-                if (!isDevelopment) {
+                if (!development) {
                     freeCompilerArgs += listOf(
                         "-Xno-call-assertions",
                         "-Xno-param-assertions",
@@ -68,7 +72,7 @@ subprojects {
 
         withType<Kotlin2JsCompile> {
             kotlinOptions {
-                if (!isDevelopment) {
+                if (!development) {
                     freeCompilerArgs += listOf(
                         "-Xir-minimized-member-names",
                         "-source-map-embed-sources=never",

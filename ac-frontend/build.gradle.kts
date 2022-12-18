@@ -5,8 +5,7 @@ plugins {
     id("com.android.application")
 }
 
-val development: String? by project
-val isDevelopment = development != "false"
+val development by transformedProperty { it != "false" }
 
 repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
@@ -123,8 +122,6 @@ compose.desktop {
         buildTypes.release.proguard {
             configurationFiles.from(projectDir.resolve("proguard-desktop-rules.pro"))
         }
-
-
     }
 }
 
@@ -138,6 +135,7 @@ android {
     defaultConfig {
         minSdk = 26
         targetSdk = 32
+        versionName = project.version as String
     }
 
     compileOptions {
@@ -147,6 +145,7 @@ android {
 
     buildTypes {
         debug {
+            versionNameSuffix = "-debug"
             proguardFiles(getDefaultProguardFile("proguard-defaults.txt"), projectDir.resolve("proguard-android-rules.pro"))
         }
         release {
@@ -168,7 +167,7 @@ tasks {
     }
 
     named("build") {
-        if (isDevelopment) {
+        if (development) {
             dependsOn(
                 // Android
                 "assembleDebug",

@@ -9,8 +9,7 @@ plugins {
     id("com.github.gmazzo.buildconfig")
 }
 
-val development: String? by project
-val isDevelopment = development != "false"
+val development by transformedProperty { it != "false" }
 
 kotlin {
     jvm("backend") {
@@ -74,7 +73,7 @@ kotlin {
                 implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1")
 
                 // Database drivers
-                if (isDevelopment) {
+                if (development) {
                     implementation("com.h2database:h2:2.1.214")
                     implementation("org.xerial:sqlite-jdbc:3.40.0.0")
                 }
@@ -92,7 +91,7 @@ kotlin {
 
 application {
     mainClass.set("dev.anarchy.backend.MainKt")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$development")
 }
 
 sass {
@@ -113,19 +112,19 @@ tasks {
     named<Copy>("backendProcessResources") {
         outputs.upToDateWhen { false }  // Bug in Webpack Task
 
-        val frontendTask = getByName("frontendBrowser${if (isDevelopment) "Development" else "Production"}Webpack")
-        val appTask = project(":ac-frontend").tasks.getByName("webBrowser${if (isDevelopment) "Development" else "Production"}Webpack")
+        val frontendTask = getByName("frontendBrowser${if (development) "Development" else "Production"}Webpack")
+        val appTask = project(":ac-frontend").tasks.getByName("webBrowser${if (development) "Development" else "Production"}Webpack")
 
         into("/static/js") {
             from(frontendTask) {
                 include("index.js")
-                if (isDevelopment) {
+                if (development) {
                     include("index.js.map")
                 }
             }
             from(appTask) {
                 include("app.js")
-                if (isDevelopment) {
+                if (development) {
                     include("app.js.map")
                 }
             }
