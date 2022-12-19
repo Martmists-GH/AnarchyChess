@@ -31,10 +31,6 @@ jobs:
         with:
           arguments: -Pdevelopment=false :ac-frontend:packageReleaseDistributionForCurrentOS
 
-      - name: List Files
-        if: ${{ matrix.os != 'windows-latest' }}
-        run: find build/ac-frontend/outputs/apk/release/ -type f
-
       - name: Upload Artifact for Release
         uses: actions/upload-artifact@v2
         with:
