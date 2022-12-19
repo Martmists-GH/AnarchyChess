@@ -78,6 +78,9 @@ jobs:
           set -x
           echo "VERSION_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
+      - name: List files
+        run: find . -type f
+
       - name: Prepare artifacts
         run: |
           set -e
