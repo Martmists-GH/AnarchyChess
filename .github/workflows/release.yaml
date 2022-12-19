@@ -89,7 +89,7 @@ jobs:
           echo "APK_SHA=$sha" >> $GITHUB_ENV
           
           mv desktop-ubuntu-latest/deb/anarchychess_*.deb anarchychess_${{ env.VERSION_TAG }}.deb
-          sha=`sha256sum anarchychess_${{ env.VERSION_TAG }}_amd64.deb | awk '{ print $1 }'`
+          sha=`sha256sum anarchychess_${{ env.VERSION_TAG }}.deb | awk '{ print $1 }'`
           echo "DEB_SHA=$sha" >> $GITHUB_ENV
           
           mv desktop-macos-latest/dmg/AnarchyChess-*.dmg anarchychess-${{ env.VERSION_TAG }}.dmg
