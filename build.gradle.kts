@@ -16,7 +16,7 @@ plugins {
 
 group = "dev.anarchy"
 
-val build_version = getGitTag() ?: "v0.0.0-${getGitSha()}"
+val build_version = getGitTag() ?: "v1.0.0-${getGitSha()}"
 version = build_version
 
 val localProperties = File("local.properties")
