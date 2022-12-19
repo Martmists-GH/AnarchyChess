@@ -84,19 +84,19 @@ jobs:
       - name: Prepare artifacts
         run: |
           set -e
-          mv app/build/ac-frontend/outputs/apk/release/ac-frontend-release-unsigned.apk anarchychess-${{ env.VERSION_TAG }}.apk
+          mv app/ac-frontend-release-unsigned.apk anarchychess-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum anarchychess-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_SHA=$sha" >> $GITHUB_ENV
           
-          mv desktop-ubuntu-latest/build/dist/main-release/deb/anarchychess_*.deb anarchychess_${{ env.VERSION_TAG }}.deb
+          mv desktop-ubuntu-latest/deb/anarchychess_*.deb anarchychess_${{ env.VERSION_TAG }}.deb
           sha=`sha256sum anarchychess_${{ env.VERSION_TAG }}_amd64.deb | awk '{ print $1 }'`
           echo "DEB_SHA=$sha" >> $GITHUB_ENV
           
-          mv desktop-macos-latest/build/dist/main-release/dmg/AnarchyChess-*.dmg anarchychess-${{ env.VERSION_TAG }}.dmg
+          mv desktop-macos-latest/dmg/AnarchyChess-*.dmg anarchychess-${{ env.VERSION_TAG }}.dmg
           sha=`sha256sum anarchychess-${{ env.VERSION_TAG }}.dmg | awk '{ print $1 }'`
           echo "DMG_SHA=$sha" >> $GITHUB_ENV
           
-          mv desktop-windows-latest/build/dist/main-release/exe/AnarchyChess-*.msi anarchychess-${{ env.VERSION_TAG }}.msi
+          mv desktop-windows-latest/msi/AnarchyChess-*.msi anarchychess-${{ env.VERSION_TAG }}.msi
           sha=`sha256sum anarchychess-${{ env.VERSION_TAG }}.msi | awk '{ print $1 }'`
           echo "MSI_SHA=$sha" >> $GITHUB_ENV
 
