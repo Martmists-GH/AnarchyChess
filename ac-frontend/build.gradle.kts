@@ -92,6 +92,7 @@ compose.desktop {
         nativeDistributions {
             packageName = "AnarchyChess"
             description = "Chess but 2"
+            version = (project.version as String).substringAfter('v').substringBefore('-')
             copyright = "© 2022 Anarchy Chess Developers. All rights reserved."
             licenseFile.set(rootDir.resolve("LICENSE"))
 

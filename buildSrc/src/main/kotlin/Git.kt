@@ -12,6 +12,10 @@ fun Project.getGitSha(): String {
     return runCommand("git rev-parse --short HEAD")
 }
 
+fun Project.getGitTag(): String? {
+    return runCommand("git tag --points-at HEAD").takeIf { it.isNotBlank() }
+}
+
 fun Project.getBuildTime(): String {
     val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
     df.timeZone = TimeZone.getTimeZone("UTC")
